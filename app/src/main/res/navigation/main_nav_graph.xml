@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/main_nav_graph"
+            app:startDestination="@id/SensorFragment">
+
+    <fragment android:id="@+id/CameraFragment" android:name="com.android.smartfarm.ui.fragment.CameraFragment"
+              android:label="fragment_camera" tools:layout="@layout/fragment_camera">
+        <action android:id="@+id/action_cameraFragment_to_sensorFragment" app:destination="@id/SensorFragment"/>
+    </fragment>
+    <fragment android:id="@+id/ChartFragment" android:name="com.android.smartfarm.ui.fragment.ChartFragment"
+              android:label="fragment_chart" tools:layout="@layout/fragment_chart">
+        <action android:id="@+id/action_chartFragment_to_sensorFragment" app:destination="@id/SensorFragment"/>
+    </fragment>
+    <fragment android:id="@+id/SensorFragment" android:name="com.android.smartfarm.ui.fragment.SensorFragment"
+              android:label="sensor_fragment" tools:layout="@layout/sensor_fragment"/>
+</navigation>

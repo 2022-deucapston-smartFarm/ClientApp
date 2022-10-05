@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/SensorFragment"
+          android:title="Main"
+          android:icon="@drawable/ic_baseline_dashboard_24"/>
+    <item android:id="@+id/CameraFragment"
+          android:title="CCTV"
+          android:icon="@drawable/ic_baseline_camera_24"/>
+    <item android:id="@+id/ChartFragment"
+          android:title="Analysis"
+          android:icon="@drawable/ic_baseline_analytics_24"/>
+</menu>
