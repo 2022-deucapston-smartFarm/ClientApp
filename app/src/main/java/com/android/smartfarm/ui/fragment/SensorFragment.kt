@@ -1,40 +1,28 @@
 package com.android.smartfarm.ui.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import com.android.smartfarm.R
 import com.android.smartfarm.data.viewmodels.SensorViewModel
-import com.android.smartfarm.databinding.SensorFragmentBinding
+import com.android.smartfarm.databinding.SensorBinding
+import com.android.smartfarm.ui.adapter.SensorAdapter
+import com.android.smartfarm.ui.base.BindFragment
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
+class SensorFragment : BindFragment<SensorBinding>(R.layout.sensor) {
+    private val sensorViewModel : SensorViewModel by activityViewModels()
+    @Inject lateinit var sensorAdapter:SensorAdapter
 
-class SensorFragment : Fragment() {
-    private lateinit var binding : SensorFragmentBinding
-    private val model : SensorViewModel by activityViewModels()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        binding.sensorViewModel=sensorViewModel
+        binding.sensorRecyclerView.adapter=sensorAdapter
+        binding.sensorRecyclerView.layoutManager=GridLayoutManager(requireActivity(),2,GridLayoutManager.VERTICAL,false)
 
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.sensor_fragment,
-            container,
-            false
-        )
-        binding.apply {
-            sensor = model
-            lifecycleOwner = this@SensorFragment
-        }
-        return binding.root
     }
 }
