@@ -9,23 +9,36 @@
         android:id="@+id/CameraFragment"
         android:name="com.android.smartfarm.ui.fragment.CameraFragment"
         android:label="fragment_camera"
-        tools:layout="@layout/fragment_camera">
-        <action
-            android:id="@+id/action_cameraFragment_to_sensorFragment"
-            app:destination="@id/SensorFragment"/>
-    </fragment>
+        tools:layout="@layout/camera"/>
     <fragment
-        android:id="@+id/ChartFragment"
-        android:name="com.android.smartfarm.ui.fragment.ChartFragment"
+        android:id="@+id/AnalysisFragment"
+        android:name="com.android.smartfarm.ui.fragment.AnalysisFragment"
         android:label="fragment_chart"
-        tools:layout="@layout/fragment_chart">
-        <action
-            android:id="@+id/action_chartFragment_to_sensorFragment"
-            app:destination="@id/SensorFragment"/>
-    </fragment>
+        tools:layout="@layout/analysis"/>
     <fragment
         android:id="@+id/SensorFragment"
         android:name="com.android.smartfarm.ui.fragment.SensorFragment"
         android:label="sensor_fragment"
-        tools:layout="@layout/sensor"/>
+        tools:layout="@layout/sensor">
+        <action
+            android:id="@+id/action_SensorFragment_to_notificationFragment"
+            app:destination="@id/NoticeFragment" />
+        <action
+            android:id="@+id/action_SensorFragment_to_ChartFragment"
+            app:destination="@id/AnalysisFragment" />
+        <action
+            android:id="@+id/action_SensorFragment_to_controlFragment"
+            app:destination="@id/ControlFragment" />
+        <action
+            android:id="@+id/action_SensorFragment_to_CameraFragment"
+            app:destination="@id/CameraFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ControlFragment"
+        android:name="com.android.smartfarm.ui.fragment.ControlFragment"
+        android:label="ControlFragment" />
+    <fragment
+        android:id="@+id/NoticeFragment"
+        android:name="com.android.smartfarm.ui.fragment.NoticeFragment"
+        android:label="NoticeFragment" />
 </navigation>

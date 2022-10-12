@@ -17,7 +17,7 @@
         android:icon="@drawable/ic_baseline_camera_24"
         app:showAsAction="always"/>
     <item
-        android:id="@+id/ChartFragment"
+        android:id="@+id/AnalysisFragment"
         android:title="Analysis"
         android:icon="@drawable/ic_baseline_analytics_24"
         app:showAsAction="always"/>

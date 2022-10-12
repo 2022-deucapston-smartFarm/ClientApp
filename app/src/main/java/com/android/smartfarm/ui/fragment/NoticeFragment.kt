@@ -2,17 +2,12 @@ package com.android.smartfarm.ui.fragment
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.activityViewModels
 import com.android.smartfarm.R
-import com.android.smartfarm.data.viewmodels.CameraViewModel
-import com.android.smartfarm.databinding.CameraBinding
+import com.android.smartfarm.databinding.NotificationBinding
 import com.android.smartfarm.ui.base.BindFragment
 
-class CameraFragment : BindFragment<CameraBinding>(R.layout.camera) {
-    private val cameraViewModel : CameraViewModel by activityViewModels()
-
+class NoticeFragment : BindFragment<NotificationBinding>(R.layout.notification) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
-
 }

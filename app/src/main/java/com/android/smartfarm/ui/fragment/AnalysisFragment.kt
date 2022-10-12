@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import com.android.smartfarm.R
-import com.android.smartfarm.data.viewmodels.CameraViewModel
-import com.android.smartfarm.databinding.CameraBinding
+import com.android.smartfarm.data.viewmodels.ChartViewModel
+import com.android.smartfarm.databinding.AnalysisBinding
 import com.android.smartfarm.ui.base.BindFragment
 
-class CameraFragment : BindFragment<CameraBinding>(R.layout.camera) {
-    private val cameraViewModel : CameraViewModel by activityViewModels()
+class AnalysisFragment : BindFragment<AnalysisBinding>(R.layout.analysis) {
+    private val chartViewModel : ChartViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
