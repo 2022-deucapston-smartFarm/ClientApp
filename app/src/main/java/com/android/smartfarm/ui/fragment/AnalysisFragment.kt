@@ -7,7 +7,9 @@ import com.android.smartfarm.R
 import com.android.smartfarm.data.viewmodels.ChartViewModel
 import com.android.smartfarm.databinding.AnalysisBinding
 import com.android.smartfarm.ui.base.BindFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AnalysisFragment : BindFragment<AnalysisBinding>(R.layout.analysis) {
     private val chartViewModel : ChartViewModel by activityViewModels()
 

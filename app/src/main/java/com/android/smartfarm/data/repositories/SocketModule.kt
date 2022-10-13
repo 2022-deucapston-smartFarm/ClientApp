@@ -12,12 +12,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object SocketModule {
-    @Inject lateinit var listener: SFWebSocketListener
     private val baseUrl=""
 
     @Provides
     @Singleton
-    fun providesOkHttpInstance(request:Request):OkHttpClient{
+    fun providesOkHttpInstance(request:Request,listener: SFWebSocketListener):OkHttpClient{
         return OkHttpClient.Builder().build().apply {
             newWebSocket(request,listener)
         }
@@ -27,5 +26,11 @@ object SocketModule {
     @Singleton
     fun providesRequestInstance():Request{
         return Request.Builder().url(baseUrl).build()
+    }
+
+    @Provides
+    @Singleton
+    fun providesWebSocketListener():SFWebSocketListener{
+        return SFWebSocketListener()
     }
 }

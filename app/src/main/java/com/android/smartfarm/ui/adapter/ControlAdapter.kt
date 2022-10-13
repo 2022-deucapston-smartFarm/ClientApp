@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.smartfarm.databinding.ControlItemBinding
 import com.android.smartfarm.ui.listener.RecyclerViewItemClickListener
 import dagger.hilt.android.qualifiers.ActivityContext
-import kotlinx.android.synthetic.main.control_item.view.*
 import javax.inject.Inject
 
 class ControlAdapter @Inject constructor(@ActivityContext private val context: Context) : RecyclerView.Adapter<ControlAdapter.ViewHolder>(),RecyclerViewItemClickListener {
@@ -18,10 +17,10 @@ class ControlAdapter @Inject constructor(@ActivityContext private val context: C
             binding.controlItemName.text=item
             binding.controlItemImg.setImageResource(context.resources.getIdentifier(item,"drawable",context.packageName))
             binding.controlButtonAdd.setOnClickListener {
-                onItemClickedListener(it.controlButtonAdd.text.toString(),adapterPosition)
+                onItemClickedListener(it.textAlignment.toString(),adapterPosition)
             }
             binding.controlButtonSub.setOnClickListener {
-                onItemClickedListener(it.controlButtonSub.text.toString(),adapterPosition)
+                onItemClickedListener(it.textAlignment.toString(),adapterPosition)
             }
         }
     }

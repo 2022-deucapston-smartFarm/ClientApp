@@ -7,7 +7,9 @@ import com.android.smartfarm.R
 import com.android.smartfarm.data.viewmodels.CameraViewModel
 import com.android.smartfarm.databinding.CameraBinding
 import com.android.smartfarm.ui.base.BindFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CameraFragment : BindFragment<CameraBinding>(R.layout.camera) {
     private val cameraViewModel : CameraViewModel by activityViewModels()
 
