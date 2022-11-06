@@ -12,7 +12,7 @@ object SocketIoInstance {//서버 연결 클래스
             var options = IO.Options()
             options.path = "/socket.io"
             options.transports = arrayOf("websocket")
-            mSocket = IO.socket("http://kyungil.iptime.org:49670",options)
+            mSocket = IO.socket("http://ec2-35-78-118-67.ap-northeast-1.compute.amazonaws.com:3000",options)
             Log.d("ServerReady","OK")
         }catch (e : URISyntaxException){
             Log.d("ServerReady","Error")
