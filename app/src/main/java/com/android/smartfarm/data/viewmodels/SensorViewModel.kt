@@ -12,6 +12,7 @@ import javax.inject.Inject
 class SensorViewModel @Inject constructor(): ViewModel() {//센서 정보 받아서 출력
 
     private var getSensorInfo : Emitter.Listener
+    private var getdumyInfo : Emitter.Listener
     init {
         getSensorInfo = Emitter.Listener { args->
             Log.d("sensorInfo",args[0].toString())//해당 부분에 데이터 받아온 json파일 풀어서 저장하기
@@ -19,6 +20,13 @@ class SensorViewModel @Inject constructor(): ViewModel() {//센서 정보 받아
         }
         SocketIoInstance.mSocket.emit("sensorInfo",true)
         SocketIoInstance.mSocket.on("sensorInfo",getSensorInfo)
+
+        getdumyInfo = Emitter.Listener { args->
+            Log.d("dumyInfo",args[0].toString())//해당 부분에 데이터 받아온 json파일 풀어서 저장하기
+        }
+        SocketIoInstance.mSocket.emit("dumySensor",true)
+        SocketIoInstance.mSocket.on("dumySensor",getdumyInfo)
+
     }
 
 
