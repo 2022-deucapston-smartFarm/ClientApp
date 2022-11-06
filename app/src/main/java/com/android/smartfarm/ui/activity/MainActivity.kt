@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
 
-        SocketIoInstance.serverConnect()//서버 연결
+        //서버 연결
         val navmainFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment//바텀네비게이터 설정
         val navController = navmainFragment.navController
         binding.mainBottomNav.setupWithNavController(navController)

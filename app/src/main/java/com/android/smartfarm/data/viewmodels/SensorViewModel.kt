@@ -1,36 +1,41 @@
 package com.android.smartfarm.data.viewmodels
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.android.smartfarm.data.entity.SensorInfo
+import com.android.smartfarm.data.repositories.Repository
 import com.android.smartfarm.data.repositories.SocketIoInstance
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.socket.emitter.Emitter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.json.JSONObject
 import javax.inject.Inject
 
 @HiltViewModel
-class SensorViewModel @Inject constructor(): ViewModel() {//센서 정보 받아서 출력
-
-    private var getSensorInfo : Emitter.Listener
-    init {
-        getSensorInfo = Emitter.Listener { args->
-            Log.d("sensorInfo",args[0].toString())//해당 부분에 데이터 받아온 json파일 풀어서 저장하기
-
-        }
-        SocketIoInstance.mSocket.emit("sensorInfo",true)
-        SocketIoInstance.mSocket.on("sensorInfo",getSensorInfo)
+class SensorViewModel @Inject constructor(private val repository: Repository): ViewModel() {//센서 정보 받아서 출력
+    private val mutableSensorInfo = MutableLiveData<ArrayList<HashMap<String,Double>>>()
+    val sensorInfo get() = mutableSensorInfo
+    private val sensorListener = Emitter.Listener{ args->
+        Log.d("data",args[0].toString())//해당 부분에 데이터 받아온 json파일 풀어서 저장하기
+        mutableSensorInfo.postValue(splitSensorInfo(JSONObject(args[0].toString())))
     }
 
-
-    fun splitSensorInfo(sensorInfo: SensorInfo):ArrayList<HashMap<String,Double>>{
+    fun setStartToReceiveSensorInfo() = viewModelScope.launch { repository.setStartToReceiveSensorInfo(sensorListener) }
+    fun setSuspendToReceiveSensorInfo() = viewModelScope.launch { repository.setSuspendToReceiveSensorInfo() }
+    fun splitSensorInfo(obj:JSONObject):ArrayList<HashMap<String,Double>>{
         val item=ArrayList<HashMap<String,Double>>()
-
+        val data =SensorInfo(obj)
         //온도,습도,co2,ph,조도
-        item[0]["temperature"]=sensorInfo.temperature.toDouble()
-        item[1]["humidity"]=sensorInfo.humidity.toDouble()
-        item[2]["co2"]=sensorInfo.co2.toDouble()
-        item[3]["ph"]=sensorInfo.ph
-        item[4]["illuminance"]=sensorInfo.illuminance.toDouble()
+
+        item.add(hashMapOf(Pair("temperature",data.temperature.toDouble())))
+        item.add(hashMapOf(Pair("humidity",data.humidity.toDouble())))
+        item.add(hashMapOf(Pair("co2",data.co2.toDouble())))
+        item.add(hashMapOf(Pair("ph",data.ph)))
+        item.add(hashMapOf(Pair("illuminance",data.illuminance.toDouble())))
 
         return item
     }
