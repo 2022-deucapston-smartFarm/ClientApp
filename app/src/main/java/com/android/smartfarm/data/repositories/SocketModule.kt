@@ -10,7 +10,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object SocketIoInstance {//서버 연결 클래스
+object SocketModule {//서버 연결 클래스
     val ioOption :IO.Options by lazy { IO.Options().apply {
     path = "/socket.io"
     transports = arrayOf("websocket")

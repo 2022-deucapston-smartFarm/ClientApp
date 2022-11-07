@@ -18,12 +18,12 @@ class Repository @Inject constructor(private val socketInstance:Socket) {//ì„œë²
         }
     }
 
-    fun setStartToReceiveSensorInfo(sensorListener:Emitter.Listener) {
-        socketInstance.emit("sensorInfo",true)
-        socketInstance.on("sensorInfo",sensorListener)
+    fun setStartToReceiveInformation(key:String,sensorListener:Emitter.Listener) {
+        socketInstance.emit(key,true)
+        socketInstance.on(key,sensorListener)
     }
 
-    fun setSuspendToReceiveSensorInfo(){
-        socketInstance.emit("sensorInfo",false)
+    fun setChangeToReceiveInformation(key:String,info:Boolean){
+        socketInstance.emit(key,info)
     }
 }

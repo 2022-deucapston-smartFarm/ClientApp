@@ -1,8 +1,10 @@
 package com.android.smartfarm.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.smartfarm.R
 import com.android.smartfarm.data.viewmodels.ControlViewModel
@@ -22,16 +24,25 @@ class ControlFragment : BindFragment<ControlBinding>(R.layout.control) {
         binding.controlViewModel=controlViewModel
         binding.controlRecyclerView.adapter=controlAdapter
         binding.controlRecyclerView.layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.VERTICAL,false)
+        controlViewModel.setStartToReceiveControlInfo()
 
+        controlViewModel.controlInfo.observe(viewLifecycleOwner, Observer {
+            controlAdapter.setItems(it)
+            controlAdapter.notifyDataSetChanged()
+        })
         controlAdapter.setOnClickListener(object :RecyclerViewItemClickListener{
             override fun onItemClickedListener(name: String, pos: Int) {
                 val item = controlAdapter.getItem(pos)
-                /*(when(name){
-                     "ON"->
-                     "OFF"->
-                }*/
-            }
 
+                when(name){
+                    "ON"->{
+                        controlViewModel.setChangeToReceiveControlInfo("control"+item.keys.first().substring(0,1).toUpperCase()+item.keys.first().substring(1),true)
+                    }
+                    "OFF"->{
+                        controlViewModel.setChangeToReceiveControlInfo("control"+item.keys.first().substring(0,1).toUpperCase()+item.keys.first().substring(1),false)
+                    }
+                }
+            }
         })
     }
 }
