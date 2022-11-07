@@ -12,7 +12,7 @@ class SensorAdapter @Inject constructor(@ActivityContext private val context:Con
     val items = ArrayList<HashMap<String,Double>>()
     inner class SensorViewHolder(private val binding: SensorItemBinding):RecyclerView.ViewHolder(binding.root){
         fun bind(item:HashMap<String,Double>){
-            binding.sensorItemName.text=item.keys.first()
+            binding.sensorItemName.text=translateSensorName(item.keys.first())
             binding.sensorItemAttr.text= item[item.keys.first()].toString()
             binding.sensorItemImg.setImageResource(context.resources.getIdentifier(item.keys.first(),"drawable",context.packageName))
         }
@@ -33,5 +33,17 @@ class SensorAdapter @Inject constructor(@ActivityContext private val context:Con
     fun setItems(items:ArrayList<HashMap<String,Double>>){
         this.items.clear()
         this.items.addAll(items)
+    }
+
+    private fun translateSensorName(name:String):String{
+        var transName:String=""
+        when(name){
+            "temperature"-> transName = "온도"
+            "humidity" -> transName = "습도"
+            "co2" -> transName = "이산화탄소"
+            "ph" -> transName = "ph"
+            "illuminance" -> transName = "조도"
+        }
+        return transName
     }
 }

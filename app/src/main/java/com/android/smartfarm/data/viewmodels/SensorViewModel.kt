@@ -1,16 +1,13 @@
 package com.android.smartfarm.data.viewmodels
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.smartfarm.data.entity.SensorInfo
 import com.android.smartfarm.data.repositories.Repository
-import com.android.smartfarm.data.repositories.SocketIoInstance
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.socket.emitter.Emitter
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import javax.inject.Inject
@@ -27,10 +24,7 @@ class SensorViewModel @Inject constructor(private val repository: Repository): V
     }
 
     fun setStartToReceiveSensorInfo() =
-        viewModelScope.launch { repository.setStartToReceiveSensorInfo(sensorListener) }
-
-    fun setSuspendToReceiveSensorInfo() =
-        viewModelScope.launch { repository.setSuspendToReceiveSensorInfo() }
+        viewModelScope.launch { repository.setStartToReceiveInformation("dumySensor",sensorListener) }
 
     fun splitSensorInfo(obj: JSONObject): ArrayList<HashMap<String, Double>> {
         val item = ArrayList<HashMap<String, Double>>()
