@@ -8,15 +8,18 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.android.smartfarm.R
-import com.android.smartfarm.data.repositories.SocketIoInstance
+import com.android.smartfarm.data.repositories.SocketModule
 import com.android.smartfarm.databinding.ActivityMainBinding
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
+import io.socket.client.Socket
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
+    @Inject lateinit var socket: Socket
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             // Get new FCM registration token
             val token = task.result
             val msg = token.toString()
-            SocketIoInstance.mSocket.emit("fcm",msg)
+            socket.emit("fcm",msg)
         })
     }
 
