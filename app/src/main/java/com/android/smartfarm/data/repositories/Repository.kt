@@ -4,6 +4,7 @@ import android.util.Log
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import okhttp3.OkHttpClient
+import org.json.JSONObject
 import java.net.URISyntaxException
 import javax.inject.Inject
 
@@ -25,5 +26,9 @@ class Repository @Inject constructor(private val socketInstance:Socket) {//ì„œë²
 
     fun setChangeToReceiveInformation(key:String,info:Boolean){
         socketInstance.emit(key,info)
+    }
+    fun setChangeToReceiveInformation(key:String,info:Int){
+        socketInstance.emit(key,info)
+        Log.d("test","$key $info")
     }
 }

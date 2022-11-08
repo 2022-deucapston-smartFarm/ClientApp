@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="settingViewModel"
+            type="com.android.smartfarm.data.viewmodels.SensorSettingBaseValueViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/seperatingLine"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/whiteGrey"
+            app:layout_constraintBottom_toTopOf="@+id/settingSensorItemImg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/settingSensorHeader" />
+
+        <TextView
+            android:id="@+id/settingSensorItemName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:text="@{settingViewModel.settingBaseValue.settingPresentValue}"
+            app:layout_constraintBottom_toTopOf="@+id/settingSItemAttr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/settingSensorItemImg" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/settingSItemAttr"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/settingSensorAccept"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/settingSensorItemName"
+            app:startIconDrawable="@drawable/heater">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/sensorValueEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@{settingViewModel.settingBaseValue.settingHint}"
+                android:text="@={settingViewModel.settingBaseValue.settingInput}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <ImageView
+            android:id="@+id/settingSensorItemImg"
+            setImageResource="@{settingViewModel.settingBaseValue.settingImgRes}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/settingSensorItemName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/seperatingLine" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.ElevatedButton"
+            android:id="@+id/settingSensorAccept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="변경"
+            android:textColor="@color/whiteGrey"
+            android:textSize="20sp"
+            android:onClick="@{()->settingViewModel.setChangeToReceiveBaseValue()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/settingSensorCancel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/settingSItemAttr" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.ElevatedButton"
+            android:id="@+id/settingSensorCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="취소"
+            android:textColor="@color/whiteGrey"
+            android:textSize="20sp"
+            android:onClick="@{()->settingViewModel.cancelDialog()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/settingSensorAccept"
+            app:layout_constraintTop_toBottomOf="@+id/settingSItemAttr" />
+
+        <TextView
+            android:id="@+id/settingSensorHeader"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:text="기준값 변경"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toTopOf="@+id/seperatingLine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
