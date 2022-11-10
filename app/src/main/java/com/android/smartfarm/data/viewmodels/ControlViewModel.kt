@@ -1,6 +1,7 @@
 package com.android.smartfarm.data.viewmodels
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ControlViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
     private val mutableControlInfo = MutableLiveData<ArrayList<HashMap<String,Boolean>>>()
-    val controlInfo get() = mutableControlInfo
+    val controlInfo:LiveData<ArrayList<HashMap<String,Boolean>>> get() = mutableControlInfo
     private val controlListener = Emitter.Listener {
         Log.d("control",it[0].toString())
         mutableControlInfo.postValue(splitControlInfo(JSONObject(it[0].toString())))

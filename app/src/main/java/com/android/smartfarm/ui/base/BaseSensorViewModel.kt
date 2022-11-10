@@ -1,6 +1,7 @@
 package com.android.smartfarm.ui.base
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.android.smartfarm.data.entity.SensorBaseValue
@@ -12,7 +13,7 @@ import org.json.JSONObject
 
 open class BaseSensorViewModel(private val repository: Repository) : ViewModel() {
     private val mutableSensorBaseValue = MutableLiveData<HashMap<String, Double>>()
-    val sensorBaseValue get() = mutableSensorBaseValue
+    val sensorBaseValue:LiveData<HashMap<String, Double>> get() = mutableSensorBaseValue
     private val sensorSettingListener = Emitter.Listener {
         mutableSensorBaseValue.postValue(splitBaseValue(JSONObject(it[0].toString())))
         Log.d("test","기준값: "+it[0].toString())
