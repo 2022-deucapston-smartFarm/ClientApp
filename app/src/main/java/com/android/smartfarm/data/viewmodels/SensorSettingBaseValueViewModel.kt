@@ -29,13 +29,13 @@ class SensorSettingBaseValueViewModel @Inject constructor(@ApplicationContext pr
     fun initalize(name:String){
         if(sensorBaseValue.value!=null){
             when(name){
-                "온도"->settingBaseValue.settingPresentValue.set("현재기준값 : "+sensorBaseValue.value!![0]["temperature"].toString())
-                "이산화탄소"->settingBaseValue.settingPresentValue.set("현재기준값 : "+sensorBaseValue.value!![1]["co2"].toString())
-                "ph"->settingBaseValue.settingPresentValue.set("현재기준값 : "+sensorBaseValue.value!![2]["ph"].toString())
-                "조도"->settingBaseValue.settingPresentValue.set("현재기준값 : "+sensorBaseValue.value!![3]["illuminance"].toString())
+                "온도"->settingBaseValue.settingPresentValue.set("현재기준값 : "+sensorBaseValue.value!!["temperature"].toString())
+                "이산화탄소"->settingBaseValue.settingPresentValue.set("현재기준값 : "+sensorBaseValue.value!!["co2"].toString())
+                "ph"->settingBaseValue.settingPresentValue.set("현재기준값 : "+sensorBaseValue.value!!["ph"].toString())
+                "조도"->settingBaseValue.settingPresentValue.set("현재기준값 : "+sensorBaseValue.value!!["illuminance"].toString())
             }
             settingBaseValue.settingName.set(name)
-            settingBaseValue.settingImgRes=context.resources.getIdentifier(translateSensorName(name),"drawable",context.packageName)
+            settingBaseValue.settingImgRes.set(context.resources.getIdentifier(translateSensorName(name),"drawable",context.packageName))
             settingBaseValue.settingHint.set("$name 입력")
         }
     }

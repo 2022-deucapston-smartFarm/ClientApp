@@ -11,43 +11,22 @@ import org.json.JSONException
 import org.json.JSONObject
 
 open class BaseSensorViewModel(private val repository: Repository) : ViewModel() {
-    private val mutableSensorBaseValue = MutableLiveData<ArrayList<HashMap<String, Double>>>()
+    private val mutableSensorBaseValue = MutableLiveData<HashMap<String, Double>>()
     val sensorBaseValue get() = mutableSensorBaseValue
     private val sensorSettingListener = Emitter.Listener {
-        mutableSensorBaseValue.postValue(splitSensorInfo(JSONObject(it[0].toString())))
+        mutableSensorBaseValue.postValue(splitBaseValue(JSONObject(it[0].toString())))
         Log.d("test","기준값: "+it[0].toString())
     }
 
     fun setToReceiveBaseValue() = repository.setStartToReceiveInformation("standardOption",sensorSettingListener)
 
-    /*private fun splitBaseValue(obj:JSONObject):SensorBaseValue{
-        val sensorBaseValue=SensorBaseValue()
-        sensorBaseValue.name=obj.getString("name")
-        sensorBaseValue.co2=obj.getInt("co2")
-        sensorBaseValue.ph=obj.getInt("ph")
-        sensorBaseValue.temperature=obj.getInt("temperature")
-        sensorBaseValue.illuminance=obj.getInt("illuminance")
-        return sensorBaseValue
-    }*/
-
-    fun splitSensorInfo(obj: JSONObject): ArrayList<HashMap<String, Double>> {
-        val item = ArrayList<HashMap<String, Double>>()
-        try{
-            val data = SensorInfo(obj)
-            item.add(hashMapOf(Pair("temperature", data.temperature.toDouble())))
-            item.add(hashMapOf(Pair("humidity", data.humidity.toDouble())))
-            item.add(hashMapOf(Pair("co2", data.co2.toDouble())))
-            item.add(hashMapOf(Pair("ph", data.ph)))
-            item.add(hashMapOf(Pair("illuminance", data.illuminance.toDouble())))
-        }catch (e: JSONException){
-            val data = SensorBaseValue(obj)
-            item.add(hashMapOf(Pair("temperature", data.temperature.toDouble())))
-            item.add(hashMapOf(Pair("co2", data.co2.toDouble())))
-            item.add(hashMapOf(Pair("ph", data.ph.toDouble())))
-            item.add(hashMapOf(Pair("illuminance", data.illuminance.toDouble())))
-        }
-        //온도,습도,co2,ph,조도
-
+    private fun splitBaseValue(obj:JSONObject):HashMap<String,Double>{
+        val item = HashMap<String, Double>()
+        val data = SensorBaseValue(obj)
+        item["temperature"] = data.temperature.toDouble()
+        item["co2"] = data.co2.toDouble()
+        item["ph"] = data.ph.toDouble()
+        item["illuminance"] = data.illuminance.toDouble()
         return item
     }
 }

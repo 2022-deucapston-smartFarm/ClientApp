@@ -1,6 +1,7 @@
 package com.android.smartfarm.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
@@ -27,6 +28,7 @@ class SensorFragment : BindFragment<SensorBinding>(R.layout.sensor) {
         binding.sensorRecyclerView.adapter=sensorAdapter
         binding.sensorRecyclerView.layoutManager=GridLayoutManager(requireActivity(),2,GridLayoutManager.VERTICAL,false)
         sensorViewModel.setStartToReceiveSensorInfo()
+        sensorViewModel.setToReceiveBaseValue()
 
         sensorViewModel.sensorInfo.observe(viewLifecycleOwner, Observer{
             sensorAdapter.setItems(it)
