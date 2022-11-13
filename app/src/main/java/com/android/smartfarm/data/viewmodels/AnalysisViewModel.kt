@@ -16,16 +16,25 @@ import io.socket.emitter.Emitter
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 @HiltViewModel
 class AnalysisViewModel @Inject constructor(private val repository: Repository) : ViewModel() { //통계 정보 받아와서 저장,출력
     private val mutableAnalysisInfo = MutableLiveData<HashMap<String,ArrayList<Double>>>()
     val analysisInfo:LiveData<HashMap<String,ArrayList<Double>>> get() = mutableAnalysisInfo
-    private val analysisListener = Emitter.Listener {
+    private val analysisDayListener = Emitter.Listener {
         mutableAnalysisInfo.postValue(splitAnalysisInfo(JSONObject(it[0].toString())))
     }
-    fun setStartToReceiveControlInfo() = viewModelScope.launch { repository.setStartToReceiveInformation("dumyDaily",analysisListener) }
+    private val analysisWeekListener = Emitter.Listener {
+        mutableAnalysisInfo.postValue(splitAnalysisInfo(JSONObject(it[0].toString())))
+    }
+    fun setStartToReceiveAnalysisDayInfo() = viewModelScope.launch { repository.setStartToReceiveInformation("dumyDaily",analysisDayListener) }
+    fun setStartToReceiveAnalysisWeekInfo() = viewModelScope.launch { repository.setStartToReceiveInformation("dumyWeek",analysisWeekListener) }
+    val mutableCategories = MutableLiveData<ArrayList<String>>(arrayListOf())
+    val categories:LiveData<ArrayList<String>> get() = mutableCategories
 
     private fun splitAnalysisInfo(obj:JSONObject):HashMap<String,ArrayList<Double>>{
         val items=HashMap<String,ArrayList<Double>>()
@@ -45,11 +54,12 @@ class AnalysisViewModel @Inject constructor(private val repository: Repository) 
         return temp
     }
 
-    fun createLineDataSet(item:HashMap<String,ArrayList<Double>>,label:String,linewidth:Float,
-                          circleRadius:Float,circleColor:Int,circleHoleColor:Int,color: Int): LineDataSet {
+    fun createLineDataSet(label:String,linewidth:Float,
+                          circleRadius:Float,circleColor:Int,circleHoleColor:Int,color: Int): LineDataSet? {
         val entries = ArrayList<Entry>()
         var counter = 1
-        for(i in item[label]!!){
+
+        for(i in analysisInfo.value?.get(label)!!){
             entries.add(Entry(counter++.toFloat(), i.toFloat()))
         }
 
