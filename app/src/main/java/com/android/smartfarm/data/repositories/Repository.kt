@@ -1,6 +1,11 @@
 package com.android.smartfarm.data.repositories
 
+import android.content.Intent
 import android.util.Log
+import androidx.lifecycle.LiveData
+import com.android.smartfarm.data.database.NoticeDao
+import com.android.smartfarm.data.database.NoticeDatabase
+import com.android.smartfarm.data.entity.NoticeEntity
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import okhttp3.OkHttpClient
@@ -8,7 +13,7 @@ import org.json.JSONObject
 import java.net.URISyntaxException
 import javax.inject.Inject
 
-class Repository @Inject constructor(private val socketInstance:Socket) {//서버에서 정보 받아오는 함수
+class Repository @Inject constructor(private val socketInstance:Socket,private val noticeDao: NoticeDao) {//서버에서 정보 받아오는 함수
 
     init {
         try{
@@ -19,9 +24,14 @@ class Repository @Inject constructor(private val socketInstance:Socket) {//서�
         }
     }
 
-    fun setStartToReceiveInformation(key:String,sensorListener:Emitter.Listener) {
+    fun setStartToReceiveInformation(key:String,Listener:Emitter.Listener) {
         socketInstance.emit(key,true)
-        socketInstance.on(key,sensorListener)
+        socketInstance.on(key,Listener)
+    }
+
+    fun setStartToReceiveInformation(key:String,obj:String,Listener:Emitter.Listener) {
+        socketInstance.emit(key,obj)
+        socketInstance.on(key,Listener)
     }
 
     fun setChangeToReceiveInformation(key:String,info:Boolean){
@@ -29,6 +39,10 @@ class Repository @Inject constructor(private val socketInstance:Socket) {//서�
     }
     fun setChangeToReceiveInformation(key:String,info:Int){
         socketInstance.emit(key,info)
-        Log.d("test","$key $info")
     }
+
+    fun getAllNoticeData(): LiveData<List<NoticeEntity>> { return noticeDao.getAllNoticeInfo()  }
+
+    fun addNoticeInfoToDatabase(header:String,info:String){ noticeDao.addNoticeInfoToDatabase(header,info)}
+
 }

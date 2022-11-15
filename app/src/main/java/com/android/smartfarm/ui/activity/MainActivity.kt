@@ -1,15 +1,20 @@
 package com.android.smartfarm.ui.activity
 
 import android.content.ContentValues
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.android.smartfarm.R
 import com.android.smartfarm.data.repositories.SocketModule
+import com.android.smartfarm.data.viewmodels.NoticeViewModel
 import com.android.smartfarm.databinding.ActivityMainBinding
+import com.android.smartfarm.ui.fragment.NoticeFragment
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,6 +25,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
     @Inject lateinit var socket: Socket
+    private val noticeViewModel:NoticeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +47,12 @@ class MainActivity : AppCompatActivity() {
             val msg = token.toString()
             socket.emit("fcm",msg)
         })
+
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        noticeViewModel.addNoticeInfoToDatabase(intent?.extras!!)
     }
 
 

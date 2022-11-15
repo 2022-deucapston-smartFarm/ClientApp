@@ -3,14 +3,15 @@ package com.android.smartfarm.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.android.smartfarm.data.entity.NoticeEntity
 import com.android.smartfarm.databinding.NoticeItemBinding
 import javax.inject.Inject
 
 class NoticeAdapter @Inject constructor(): RecyclerView.Adapter<NoticeAdapter.ViewHolder>() {
-    private val items = ArrayList<String>()
+    private val items = ArrayList<NoticeEntity>()
     inner class ViewHolder(private val binding: NoticeItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item:String){
-            binding.noticeItemText.text=item
+        fun bind(item:NoticeEntity){
+            binding.noticeItemText.text=item.info
         }
     }
 
@@ -26,7 +27,7 @@ class NoticeAdapter @Inject constructor(): RecyclerView.Adapter<NoticeAdapter.Vi
         return items.size
     }
 
-    fun setItems(items:ArrayList<String>){
+    fun setItems(items:List<NoticeEntity>){
         this.items.clear()
         this.items.addAll(items)
     }
