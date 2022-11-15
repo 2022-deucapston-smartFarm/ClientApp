@@ -1,6 +1,5 @@
 package com.android.smartfarm.data.entity
 
-import androidx.annotation.LayoutRes
 import androidx.annotation.RawRes
 import androidx.databinding.ObservableField
 

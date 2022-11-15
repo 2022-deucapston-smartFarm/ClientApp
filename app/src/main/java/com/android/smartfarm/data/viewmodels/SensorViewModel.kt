@@ -23,7 +23,6 @@ class SensorViewModel @Inject constructor(private val repository: Repository): B
     private val mutableSensorInfo = MutableLiveData<ArrayList<HashMap<String, Double>>>()
     val sensorInfo:LiveData<ArrayList<HashMap<String, Double>>> get() = mutableSensorInfo
     private val sensorListener = Emitter.Listener { args ->
-        Log.d("data", args[0].toString())//해당 부분에 데이터 받아온 json파일 풀어서 저장하기
         mutableSensorInfo.postValue(splitSensorInfo(JSONObject(args[0].toString())))
     }
 

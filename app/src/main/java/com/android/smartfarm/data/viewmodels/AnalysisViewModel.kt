@@ -1,22 +1,17 @@
 package com.android.smartfarm.data.viewmodels
 
-import android.graphics.Color
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android.smartfarm.data.entity.DailySensorInfo
 import com.android.smartfarm.data.repositories.Repository
 import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.socket.emitter.Emitter
 import kotlinx.coroutines.launch
 import org.json.JSONArray
 import org.json.JSONObject
-import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -28,11 +23,10 @@ class AnalysisViewModel @Inject constructor(private val repository: Repository) 
     private val analysisDayListener = Emitter.Listener {
         mutableAnalysisInfo.postValue(splitAnalysisInfo(JSONObject(it[0].toString())))
     }
-    private val analysisWeekListener = Emitter.Listener {
-        mutableAnalysisInfo.postValue(splitAnalysisInfo(JSONObject(it[0].toString())))
-    }
-    fun setStartToReceiveAnalysisDayInfo() = viewModelScope.launch { repository.setStartToReceiveInformation("dumyDaily",analysisDayListener) }
-    fun setStartToReceiveAnalysisWeekInfo() = viewModelScope.launch { repository.setStartToReceiveInformation("dumyWeek",analysisWeekListener) }
+
+    fun setStartToReceiveAnalysisDayInfo(obj:String) = viewModelScope.launch { repository.setStartToReceiveInformation("chartInfo",obj,analysisDayListener) }
+    fun setStartToReceiveAnalysisDayInfo() = viewModelScope.launch { repository.setStartToReceiveInformation("dumyMessage",analysisDayListener) }
+
     val mutableCategories = MutableLiveData<ArrayList<String>>(arrayListOf())
     val categories:LiveData<ArrayList<String>> get() = mutableCategories
 

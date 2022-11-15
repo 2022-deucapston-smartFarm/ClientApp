@@ -1,44 +1,36 @@
 package com.android.smartfarm.ui.fragment
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.CompoundButton
-import androidx.core.view.get
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import com.android.smartfarm.R
 import com.android.smartfarm.data.viewmodels.AnalysisViewModel
 import com.android.smartfarm.databinding.AnalysisBinding
 import com.android.smartfarm.ui.base.BindFragment
+import com.borax12.materialdaterangepicker.date.DatePickerDialog
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
-import org.jetbrains.anko.custom.style
+import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 @AndroidEntryPoint
 class AnalysisFragment : BindFragment<AnalysisBinding>(R.layout.analysis) {
     private val analysisViewModel : AnalysisViewModel by activityViewModels()
-    private val analysisSharedPref : SharedPreferences by lazy { requireActivity().getSharedPreferences("분석데이터_분류_카테고리", Context.MODE_PRIVATE) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        analysisViewModel.setStartToReceiveAnalysisDayInfo()
+
         analysisViewModel.analysisInfo.observe(viewLifecycleOwner, Observer {
             binding.analysisChipGroup.removeAllViews()
             for(key in it.keys){
@@ -64,6 +56,24 @@ class AnalysisFragment : BindFragment<AnalysisBinding>(R.layout.analysis) {
             }
 
         })
+
+        binding.pieChart.setOnLongClickListener {
+            val now: Calendar = Calendar.getInstance()
+            val dpd: DatePickerDialog = DatePickerDialog.newInstance(
+                { view, year, monthOfYear, dayOfMonth, yearEnd, monthOfYearEnd, dayOfMonthEnd ->
+                    analysisViewModel.setStartToReceiveAnalysisDayInfo(JSONObject().apply {
+                        put("startDate",SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().apply { set(year,monthOfYear,dayOfMonth) }.time))
+                        put("endDate",SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().apply { set(yearEnd,monthOfYearEnd,dayOfMonthEnd) }.time))
+                    }.toString())
+                },
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+            )
+
+            dpd.show(requireActivity().fragmentManager, "Datepickerdialog")
+            true
+        }
     }
 
     private fun createChip(key:String) : Chip {
@@ -107,13 +117,12 @@ class AnalysisFragment : BindFragment<AnalysisBinding>(R.layout.analysis) {
 
         lineChart.apply{
             setVisibleXRange(10F,10F)
-            isDragXEnabled=true
-            isDoubleTapToZoomEnabled = true
+            isDragEnabled=true
+            isDoubleTapToZoomEnabled = false
             setDrawGridBackground(false)
             description = Description().apply { text="" }
             animateY(2000, Easing.EaseInCubic)
         }
     }
-
 
 }

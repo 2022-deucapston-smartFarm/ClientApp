@@ -17,7 +17,6 @@ class ControlViewModel @Inject constructor(private val repository: Repository) :
     private val mutableControlInfo = MutableLiveData<ArrayList<HashMap<String,Boolean>>>()
     val controlInfo:LiveData<ArrayList<HashMap<String,Boolean>>> get() = mutableControlInfo
     private val controlListener = Emitter.Listener {
-        Log.d("control",it[0].toString())
         mutableControlInfo.postValue(splitControlInfo(JSONObject(it[0].toString())))
     }
     fun setStartToReceiveControlInfo() = viewModelScope.launch { repository.setStartToReceiveInformation("controlInfo",controlListener) }
