@@ -2,7 +2,7 @@ package com.android.smartfarm.ui.fragment
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
+import android.view.Gravity
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -18,6 +18,7 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.LineData
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
+import org.jetbrains.anko.textView
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
@@ -29,17 +30,20 @@ class AnalysisFragment : BindFragment<AnalysisBinding>(R.layout.analysis) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val guildMessage = binding.lineChart.textView("화면을 꾹 눌러 기간을 지정해주세요.").apply {
+            gravity=Gravity.CENTER
+        }
 
         analysisViewModel.analysisInfo.observe(viewLifecycleOwner, Observer {
             binding.analysisChipGroup.removeAllViews()
+            guildMessage.visibility = View.GONE
             for(key in it.keys){
                 binding.analysisChipGroup.addView(createChip(key))
             }
         })
 
         analysisViewModel.categories.observe(viewLifecycleOwner,Observer{
-            if (it != null) {
+            if (it.isNotEmpty()) {
                 val lineData = LineData()
                 for(category in it){
                     lineData.addDataSet(analysisViewModel.createLineDataSet(
@@ -50,14 +54,15 @@ class AnalysisFragment : BindFragment<AnalysisBinding>(R.layout.analysis) {
                         Color.BLUE,
                         Color.parseColor("#FFA1B4DC")))
                 }
-                binding.pieChart.data = lineData
-                setAnalysisChart(binding.pieChart)
-                binding.pieChart.invalidate()
+                binding.lineChart.data = lineData
+                setAnalysisChart(binding.lineChart)
+                binding.lineChart.invalidate()
+            }else{
+                guildMessage.visibility = View.VISIBLE
             }
-
         })
 
-        binding.pieChart.setOnLongClickListener {
+        binding.lineChart.setOnLongClickListener {
             val now: Calendar = Calendar.getInstance()
             val dpd: DatePickerDialog = DatePickerDialog.newInstance(
                 { view, year, monthOfYear, dayOfMonth, yearEnd, monthOfYearEnd, dayOfMonthEnd ->

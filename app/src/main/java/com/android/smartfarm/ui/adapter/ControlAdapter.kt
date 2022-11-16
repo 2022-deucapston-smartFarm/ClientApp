@@ -1,11 +1,8 @@
 package com.android.smartfarm.ui.adapter
 
 import android.content.Context
-import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.ColorRes
 import androidx.recyclerview.widget.RecyclerView
 import com.android.smartfarm.R
 import com.android.smartfarm.databinding.ControlItemBinding

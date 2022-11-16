@@ -1,15 +1,11 @@
 package com.android.smartfarm.data.repositories
 
-import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.android.smartfarm.data.database.NoticeDao
-import com.android.smartfarm.data.database.NoticeDatabase
 import com.android.smartfarm.data.entity.NoticeEntity
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
-import okhttp3.OkHttpClient
-import org.json.JSONObject
 import java.net.URISyntaxException
 import javax.inject.Inject
 
@@ -45,4 +41,5 @@ class Repository @Inject constructor(private val socketInstance:Socket,private v
 
     fun addNoticeInfoToDatabase(header:String,info:String){ noticeDao.addNoticeInfoToDatabase(header,info)}
 
+    fun deleteNoticeInfoToDatabase(key:Int){noticeDao.deleteNoticeInfoToDatabase(key)}
 }

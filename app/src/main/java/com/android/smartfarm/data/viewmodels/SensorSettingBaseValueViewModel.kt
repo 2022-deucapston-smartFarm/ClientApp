@@ -1,23 +1,14 @@
 package com.android.smartfarm.data.viewmodels
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.Navigation
-import com.android.smartfarm.data.entity.SensorBaseValue
 import com.android.smartfarm.data.entity.SensorSettingEntity
 import com.android.smartfarm.data.repositories.Repository
 import com.android.smartfarm.ui.base.BaseSensorViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import io.socket.emitter.Emitter
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.json.JSONObject
 import javax.inject.Inject
 
 @HiltViewModel

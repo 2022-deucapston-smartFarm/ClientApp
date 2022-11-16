@@ -1,23 +1,19 @@
 package com.android.smartfarm.ui.fragment
 
-import android.content.Intent
-import android.content.Intent.getIntent
+import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.smartfarm.R
-import com.android.smartfarm.data.entity.NoticeEntity
 import com.android.smartfarm.data.viewmodels.AnalysisViewModel
 import com.android.smartfarm.data.viewmodels.NoticeViewModel
-import com.android.smartfarm.data.viewmodels.SensorViewModel
 import com.android.smartfarm.databinding.NoticeBinding
 import com.android.smartfarm.ui.adapter.NoticeAdapter
 import com.android.smartfarm.ui.base.BindFragment
+import com.android.smartfarm.ui.listener.RecyclerViewItemClickListener
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.NullPointerException
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -37,7 +33,7 @@ class NoticeFragment : BindFragment<NoticeBinding>(R.layout.notice) {
             noticeAdapter.notifyDataSetChanged()
         })
 
-        if(requireActivity().intent.extras!=null){
+        if(requireActivity().intent!=null){
             noticeViewModel.addNoticeInfoToDatabase(requireActivity().intent.extras!!)
             requireActivity().intent=null
         }
@@ -45,6 +41,25 @@ class NoticeFragment : BindFragment<NoticeBinding>(R.layout.notice) {
         binding.button.setOnClickListener {
             viewmodel.setStartToReceiveAnalysisDayInfo()
         }
+
+        noticeAdapter.setOnItemClickListener(object:RecyclerViewItemClickListener{
+            override fun onItemClickedListener(name: String, pos: Int) {
+                AlertDialog.Builder(requireActivity()).apply {
+                    setTitle("메세지를 삭제하시겠습니까?")
+                    setPositiveButton("네"
+                    ) { p0, p1 ->
+                        noticeViewModel.deleteNoticeInfoToDatabase(noticeAdapter.getItem(pos))
+                    }
+                    setNegativeButton("아니오") { p0, p1 ->
+                        /* Nothing to do */
+                    }
+                    show()
+                }
+
+                noticeViewModel.deleteNoticeInfoToDatabase(noticeAdapter.getItem(pos))
+            }
+
+        })
 
     }
 }

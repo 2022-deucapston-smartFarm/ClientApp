@@ -36,7 +36,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/pieChart"
+            android:id="@+id/lineChart"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="center"
