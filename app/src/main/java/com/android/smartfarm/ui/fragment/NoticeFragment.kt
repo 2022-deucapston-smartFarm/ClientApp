@@ -1,7 +1,9 @@
 package com.android.smartfarm.ui.fragment
 
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -33,7 +35,7 @@ class NoticeFragment : BindFragment<NoticeBinding>(R.layout.notice) {
             noticeAdapter.notifyDataSetChanged()
         })
 
-        if(requireActivity().intent!=null){
+        if(requireActivity().intent?.extras!=null){
             noticeViewModel.addNoticeInfoToDatabase(requireActivity().intent.extras!!)
             requireActivity().intent=null
         }
@@ -46,17 +48,16 @@ class NoticeFragment : BindFragment<NoticeBinding>(R.layout.notice) {
             override fun onItemClickedListener(name: String, pos: Int) {
                 AlertDialog.Builder(requireActivity()).apply {
                     setTitle("메세지를 삭제하시겠습니까?")
-                    setPositiveButton("네"
+                    setPositiveButton(
+                        "네"
                     ) { p0, p1 ->
                         noticeViewModel.deleteNoticeInfoToDatabase(noticeAdapter.getItem(pos))
                     }
-                    setNegativeButton("아니오") { p0, p1 ->
-                        /* Nothing to do */
-                    }
+                    setNegativeButton("아니오", null)
+                    setCancelable(false)
+                    create()
                     show()
                 }
-
-                noticeViewModel.deleteNoticeInfoToDatabase(noticeAdapter.getItem(pos))
             }
 
         })

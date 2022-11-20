@@ -1,4 +1,4 @@
-package com.android.smartfarm.data.repositories
+package com.android.smartfarm.data.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -39,7 +39,7 @@ class Repository @Inject constructor(private val socketInstance:Socket,private v
 
     fun getAllNoticeData(): LiveData<List<NoticeEntity>> { return noticeDao.getAllNoticeInfo()  }
 
-    fun addNoticeInfoToDatabase(header:String,info:String){ noticeDao.addNoticeInfoToDatabase(header,info)}
+    suspend fun addNoticeInfoToDatabase(header:String,info:String){ noticeDao.addNoticeInfoToDatabase(header,info)}
 
-    fun deleteNoticeInfoToDatabase(key:Int){noticeDao.deleteNoticeInfoToDatabase(key)}
+    suspend fun deleteNoticeInfoToDatabase(key:Int){noticeDao.deleteNoticeInfoToDatabase(key)}
 }

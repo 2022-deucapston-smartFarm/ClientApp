@@ -1,4 +1,4 @@
-package com.android.smartfarm.data.message
+package com.android.smartfarm.data.firebase
 
 import android.R
 import android.app.NotificationChannel
@@ -28,6 +28,8 @@ class FCM : FirebaseMessagingService() {
         getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
 
         val intent = Intent(applicationContext,MainActivity::class.java).apply {
+            addCategory(Intent.CATEGORY_LAUNCHER)
+            addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             putExtra("header",title)
             putExtra("info",text)
         }

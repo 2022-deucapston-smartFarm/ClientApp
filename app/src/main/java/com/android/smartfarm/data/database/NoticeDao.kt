@@ -12,8 +12,8 @@ interface NoticeDao {
     fun getAllNoticeInfo():LiveData<List<NoticeEntity>>
 
     @Query("insert into NoticeEntity(header,info) values (:header,:info)")
-    fun addNoticeInfoToDatabase(header:String,info:String)
+    suspend fun addNoticeInfoToDatabase(header:String,info:String)
 
     @Query("delete from NoticeEntity where NoticeEntity.id = :key")
-    fun deleteNoticeInfoToDatabase(key:Int)
+    suspend fun deleteNoticeInfoToDatabase(key:Int)
 }
