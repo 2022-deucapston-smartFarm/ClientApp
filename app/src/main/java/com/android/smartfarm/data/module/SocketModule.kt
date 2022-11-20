@@ -1,4 +1,4 @@
-package com.android.smartfarm.data.repositories
+package com.android.smartfarm.data.module
 
 import dagger.Module
 import dagger.Provides

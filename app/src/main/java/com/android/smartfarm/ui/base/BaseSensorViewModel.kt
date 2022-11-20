@@ -5,10 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.android.smartfarm.data.entity.SensorBaseValue
-import com.android.smartfarm.data.entity.SensorInfo
-import com.android.smartfarm.data.repositories.Repository
+import com.android.smartfarm.data.repository.Repository
 import io.socket.emitter.Emitter
-import org.json.JSONException
 import org.json.JSONObject
 
 open class BaseSensorViewModel(private val repository: Repository) : ViewModel() {

@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.android.smartfarm.data.entity.SensorSettingEntity
-import com.android.smartfarm.data.repositories.Repository
+import com.android.smartfarm.data.repository.Repository
 import com.android.smartfarm.ui.base.BaseSensorViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext

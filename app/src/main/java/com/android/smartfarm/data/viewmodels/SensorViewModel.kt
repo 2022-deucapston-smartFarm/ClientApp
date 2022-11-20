@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.android.smartfarm.data.entity.SensorInfo
-import com.android.smartfarm.data.repositories.Repository
+import com.android.smartfarm.data.repository.Repository
 import com.android.smartfarm.ui.base.BaseSensorViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.socket.emitter.Emitter

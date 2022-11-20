@@ -7,14 +7,11 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.android.smartfarm.R
-import com.android.smartfarm.data.repositories.SocketModule
 import com.android.smartfarm.data.viewmodels.NoticeViewModel
 import com.android.smartfarm.databinding.ActivityMainBinding
-import com.android.smartfarm.ui.fragment.NoticeFragment
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint

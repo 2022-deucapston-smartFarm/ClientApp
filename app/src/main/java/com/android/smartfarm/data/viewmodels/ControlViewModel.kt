@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.android.smartfarm.data.repositories.Repository
+import com.android.smartfarm.data.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.socket.emitter.Emitter
 import kotlinx.coroutines.launch
